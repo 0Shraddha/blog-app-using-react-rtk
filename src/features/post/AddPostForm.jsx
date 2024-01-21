@@ -2,10 +2,19 @@ import React, { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {nanoid} from '@reduxjs/toolkit'
 
-import {postAdded} from './postsSlice'
+import {postAdded} from './PostsSlice'
 
 const AddPostForm = () => {
   const dispatch = useDispatch()
+
+  
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const onTitleChanged = e => setTitle(e.target.value)
+  const onContentChanged = e => setContent(e.target.value)
+
+
 const onSavePostClicked =()=> {
   if(title && content){
     dispatch(
@@ -20,15 +29,7 @@ const onSavePostClicked =()=> {
 
   }
 }
-
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-
-    const onTitleChanged = e => setTitle(e.target.value)
-    const onContentChanged = e => setContent(e.target.value)
-
-
-
+const savePost = Boolean(title) && Boolean(content);
   return (
     <section>
          <h2>Add a New Post</h2>
@@ -50,7 +51,7 @@ const onSavePostClicked =()=> {
                     onChange={onContentChanged}
 
                 />
-                <button type='button' onClick={onSavePostClicked}>Save Post</button>
+                <button type='button' disabled= {!savePost} onClick={onSavePostClicked}>Save Post</button>
                 </form>
         </section>
   )
