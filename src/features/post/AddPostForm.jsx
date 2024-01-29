@@ -1,19 +1,25 @@
-import React, { useState } from 'react'
-import {useDispatch} from 'react-redux'
+import React from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {nanoid} from '@reduxjs/toolkit'
 
-import {postAdded} from './PostsSlice'
+import {postAdded, setTitle, setContent} from './PostsSlice'
+// import { Link } from 'react-router-dom'
 
 const AddPostForm = () => {
   const dispatch = useDispatch()
 
-  
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+const title = useSelector((state)=> state.posts.title);
+const content = useSelector((state)=> state.posts.content);
 
-  const onTitleChanged = e => setTitle(e.target.value)
-  const onContentChanged = e => setContent(e.target.value)
+const onTitleChanged = (e) => {
+  console.log('Title Changed:', e.target.value);
+  dispatch(setTitle(e.target.value));
+};
 
+const onContentChanged = (e) => {
+  console.log('Content Changed:', e.target.value);
+  dispatch(setContent(e.target.value));
+};
 
 const onSavePostClicked =()=> {
   if(title && content){
@@ -24,9 +30,8 @@ const onSavePostClicked =()=> {
         content
       })
     )
-    setTitle('')
-    setContent('')
-
+    dispatch(setTitle(""))
+    dispatch(setContent(""))
   }
 }
 const savePost = Boolean(title) && Boolean(content);
@@ -53,6 +58,7 @@ const savePost = Boolean(title) && Boolean(content);
                 />
                 <button type='button' disabled= {!savePost} onClick={onSavePostClicked}>Save Post</button>
                 </form>
+
         </section>
   )
 }

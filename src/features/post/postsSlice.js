@@ -1,36 +1,55 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {sub} from 'date-fns';
+import { createSlice } from "@reduxjs/toolkit";
+import { sub } from "date-fns";
 
-const initialState = [
-    {id : 1, title: "Redux", content : "Learning redux as the foundation. Redux is a predictable state container for JavaScript apps.  Redux is a predictable state container for JavaScript apps. ", date : sub(new Date(), {minutes : 10}).toISOString()},
-    {id : 2, title: "Redux ToolKit", content : "Learning rtk after redux.", date : sub(new Date(), {minutes : 5}).toISOString()}
-]
-
-const PostsSlice =createSlice({
-    name : 'posts',
-    initialState,
-    reducers : {
-        postAdded : {
-            reducer(state,action){
-                const { id, title, content } = action.payload;
-                const date = new Date().toISOString();
-            state.push({ id, title, content, date
-             })
-        },
-        reactionAdded(state,action){
-           const {postId, reaction} =action.payload
-           const existingPost = state.find(post=> post.id === postId)
-           if(existingPost){
-               existingPost.reactions[reaction]++
-           }
-        }
-        
+const PostsSlice = createSlice({
+  name: "posts",
+  initialState: {
+    list: [
+      {
+        id: 1,
+        title: "Redux",
+        content:
+          "Learning redux as the foundation. Redux is a predictable state container for JavaScript apps.  Redux is a predictable state container for JavaScript apps. ",
+        date: sub(new Date(), { minutes: 10 }).toISOString(),
+      },
+      {
+        id: 2,
+        title: "Redux ToolKit",
+        content: "Learning rtk after redux.",
+        date: sub(new Date(), { minutes: 5 }).toISOString(),
+      },
+    ],
+    title: "",
+    content: "",
+  },
+  reducers: {
+    setTitle(state, action) {
+      state.title = action.payload;
+    },
+    setContent(state, action) {
+      state.content = action.payload;
+    },
+    postAdded(state, action) {
+      const { id, title, content } = action.payload;
+      const date = new Date().toISOString();
+      const initialState = state.list ? [...state.list] : [];
+      initialState.push({ id, title, content, date });
+      state.list = initialState;
+      console.log("list:", state.list);
+    },
+    deleteData(state,action){
+      state.list = state.list.filter((data)=> data.id !== action.payload);
+      console.log(state.list);
+    },
+    deleteAll(state,action){
+      state.list = [];
     }
-}})
-export const selectAllPosts = (state) => state.posts;
-export const selectPostsById = (state, postId) => 
-    state.posts.posts.find(post => post.id === postId)
+  },
+});
 
-export const {postAdded, reactionAdded} = PostsSlice.actions
+export const selectPostsById = (state, postId) =>
+  state.posts.list.find((post) => post.id === postId);
 
-export default PostsSlice.reducer
+export const { postAdded, setTitle, setContent, deleteData, deleteAll } = PostsSlice.actions;
+
+export default PostsSlice.reducer;

@@ -67,3 +67,11 @@ form {
   color: whitesmoke;
   font-size: 1rem;
 }
+
+nav a{
+  text-decoration: none;
+}
+nav a:active{
+  text-decoration: none;
+  font-weight: bold;
+}
