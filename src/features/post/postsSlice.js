@@ -1,5 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
+import { useState } from "react";
+
+// const title = localStorage.getItem('title');
+// const content = localStorage.getItem('content');
+
+// const getDataFromLS = () => {
+//   const data = localStorage.getItem("lists");
+//   if (data) {
+//     return JSON.parse(data);
+//   } else {
+//     return [];
+//   }
+// };
+// const [list, setLists] = useState(getDataFromLS());
+
+// useEffect(() => {
+//   localStorage.setItem("lists", JSON.stringify(list));
+//   //JSON.stringify is used to store the value as string
+// }, [list]);
 
 const PostsSlice = createSlice({
   name: "posts",
@@ -32,14 +51,25 @@ const PostsSlice = createSlice({
     postAdded(state, action) {
       const { id, title, content } = action.payload;
       const date = new Date().toISOString();
+     
       const initialState = state.list ? [...state.list] : [];
       initialState.push({ id, title, content, date });
       state.list = initialState;
+
       console.log("list:", state.list);
+      //console.log(title);
+    },
+    editTitle(state,action){
+        const {id, title,content} = action.payload;
+        const edit =  state.find(post = post.id == id);
+        if(edit){
+          edit.title = title;
+          edit.content = content;
+        }
     },
     deleteData(state,action){
       state.list = state.list.filter((data)=> data.id !== action.payload);
-      console.log(state.list);
+     // console.log(state.list);
     },
     deleteAll(state,action){
       state.list = [];
@@ -49,7 +79,8 @@ const PostsSlice = createSlice({
 
 export const selectPostsById = (state, postId) =>
   state.posts.list.find((post) => post.id === postId);
+  
 
-export const { postAdded, setTitle, setContent, deleteData, deleteAll } = PostsSlice.actions;
+export const { postAdded, setTitle, setContent, deleteData, deleteAll, editPost } = PostsSlice.actions;
 
 export default PostsSlice.reducer;

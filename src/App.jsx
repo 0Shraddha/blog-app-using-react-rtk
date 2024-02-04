@@ -24,11 +24,12 @@ function App() {
         <Route path="/" element={<Layout/>}/>
         <Route index element={<PostsList/>}/>
         <Route index element={<UserList/>}/>
+        <Route path="/edit/:postId" element={<EditFormPost/>} />
 
         <Route path="/post">
           <Route index element={<AddPostForm/>}/>
-          <Route path="edit" element={<EditFormPost/>} />
-          <Route path=":postId" element={<SinglePostPage/>}/>
+          <Route path="/post/:postId" element={<SinglePostPage />} />
+
         </Route>
 
         <Route path="user">

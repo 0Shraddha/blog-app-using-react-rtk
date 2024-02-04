@@ -6,8 +6,8 @@
 
 html {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  background: #333;
-  color: whitesmoke;
+  background: #fff6f6;
+  color: rgb(14, 14, 14);
 }
 
 body {
@@ -35,9 +35,10 @@ section {
 
 article {
   margin: 0.5em 0.5em 0.5em 0;
-  border: 1px solid whitesmoke;
+  border: 1px solid rgb(14, 14, 14);
   border-radius: 10px;
   padding: 1em;
+  width: 30%;
 }
 
 h1 {
@@ -49,6 +50,14 @@ p {
   line-height: 1.4;
   font-size: 1.2rem;
   margin: 0.5em 0;
+}
+button{
+  margin: 0.5em 0.5em 0 0;
+  padding: .2em .4em;
+  border: 1px solid;
+  border-radius: 6px;
+  cursor: pointer;
+
 }
 
 form {
@@ -67,11 +76,31 @@ form {
   color: whitesmoke;
   font-size: 1rem;
 }
-
+nav{
+  margin-left: 45%;
+}
 nav a{
   text-decoration: none;
 }
 nav a:active{
   text-decoration: none;
   font-weight: bold;
+}
+
+.Header{
+  text-align: center;
+  color: rgba(132, 0, 255, 0.705);
+}
+
+.btn-view{
+  background-color: rgba(132, 0, 255, 0.705);
+  color: #fff6f6;
+}
+.btn-del{
+  background-color: rgba(255, 0, 0, 0.705);
+  color: #fff6f6;
+}
+.btn-add{
+  background-color: rgba(2, 202, 36, 0.705);
+  color: #fff6f6;
 }

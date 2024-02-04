@@ -1,12 +1,14 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {nanoid} from '@reduxjs/toolkit'
+import { useNavigate } from 'react-router-dom'
 
 import {postAdded, setTitle, setContent} from './PostsSlice'
 // import { Link } from 'react-router-dom'
 
 const AddPostForm = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 const title = useSelector((state)=> state.posts.title);
 const content = useSelector((state)=> state.posts.content);
@@ -21,19 +23,23 @@ const onContentChanged = (e) => {
   dispatch(setContent(e.target.value));
 };
 
-const onSavePostClicked =()=> {
-  if(title && content){
+const onSavePostClicked = () => {
+  console.log('Saving post:', { title, content });
+
+  if (title && content) {
     dispatch(
       postAdded({
-        id : nanoid(),
+        id: nanoid(),
         title,
-        content
+        content,
       })
-    )
-    dispatch(setTitle(""))
-    dispatch(setContent(""))
+    );
+    //setLists(...list);
+    dispatch(setTitle(''));
+    dispatch(setContent(''));
+    navigate('/');
   }
-}
+};
 const savePost = Boolean(title) && Boolean(content);
   return (
     <section>
